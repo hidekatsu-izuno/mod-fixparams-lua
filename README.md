@@ -10,7 +10,13 @@ First, you have to enable mod_lua. For example, the following:
 sudo a2enmod lua
 ```
 
-Second, configure as follows:
+Second, you have to copy fixparams.lua to /etc/apache2/.
+
+```sh
+sudo cp fixparams.lua /etc/apache2/
+```
+
+Finally, configure as follows:
 
 ```apache
 LuaInputFilter fix_body_params_filter /etc/apache2/fixparams.lua fix_body_params_filter
@@ -20,6 +26,15 @@ LuaInputFilter fix_body_params_filter /etc/apache2/fixparams.lua fix_body_params
     SetInputFilter fix_body_params_filter
 </Location>
 ```
+
+## Characters to be encoded
+
+|Behavior |Characters                 |
+|---------|---------------------------|
+|No encode|0-9 a-z A-Z % & + - . = _ ~|
+|Encode   |others                     |
+
+If you change this behavior, you can achive by modifying a noencode variable in fixparams.lua.
 
 ## Example
 
